@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToAddForm(View view){
         Intent intent = new Intent(this, AddItem.class);
+        startActivity(intent);
+
     }
 
 
