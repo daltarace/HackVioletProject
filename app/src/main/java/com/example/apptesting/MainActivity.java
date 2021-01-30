@@ -39,15 +39,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void isExpired(String dateYear) {
-        try {
-            new SimpleDateFormat("MM/yyyy").parse(dateYear).compareTo(new Date());
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-
-
     public void sendMessage(View view) {
         // Do something in response to button
         Intent intent = new Intent(this, DisplayMessageActivity.class);
@@ -58,10 +49,5 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void showDatePickerDialog(View view) {
 
-        DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "datePicker");
-
-    }
 }
