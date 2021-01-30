@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AppTesting</string>
+    <string name="app_name">Xpira</string>
     <string name="Name">Xpira</string>
     <string name="add_item_button">Add item button</string>
     <string name="subtitle">We track expiration dates so you don\'t have to!</string>
