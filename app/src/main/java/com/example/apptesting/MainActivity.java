@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,19 +34,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    @Override
-//    protected Dialog onCreateDialog(int id) {
-//        // TODO Auto-generated method stub
-//        if (id == 999) {
-//            return new DatePickerDialog(this, myDateListener, year, month, day);
-//        }
-//        return null;
-//    }
 
     public void sendMessage(View view) {
         // Do something in response to button
         Intent intent = new Intent(this, DisplayMessageActivity.class);
-        EditText editText = (EditText) findViewById(R.id.editText);
+        TextView editText = (TextView) findViewById(R.id.textView4);
         String message = editText.getText().toString();
         intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
