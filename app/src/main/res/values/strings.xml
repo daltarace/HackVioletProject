@@ -2,7 +2,7 @@
     <string name="app_name">AppTesting</string>
     <string name="Name">Xpira</string>
     <string name="add_item_button">Add item button</string>
-    <string name="subtitle">We track expiration so you don\'t have to!</string>
+    <string name="subtitle">We track expiration dates so you don\'t have to!</string>
     <string name="xpira_image">Xpira image</string>
     <string name="edit_message">Enter a message</string>
     <string name="button_send">Send</string>
