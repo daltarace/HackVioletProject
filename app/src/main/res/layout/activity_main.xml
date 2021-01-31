@@ -45,6 +45,7 @@
         android:clickable="true"
         android:contentDescription="TODO"
         android:onClick="goToAddForm"
+        app:backgroundTint="#00BCD4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.954"

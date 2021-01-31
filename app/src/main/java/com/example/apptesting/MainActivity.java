@@ -127,9 +127,9 @@ public class MainActivity extends AppCompatActivity {
         List<HashMap<String,String>> listItems = new ArrayList<>();
 
 //        SimpleAdapter simpleAdapter = new SimpleAdapter(this, listItems,
-                R.layout.list_item, arrayList);
+//                R.layout.list_item, arrayList);
 //not done
-        listView.setAdapter(arrayAdapter);
+//        listView.setAdapter(arrayAdapter);
     }
 
     InputImage image;
