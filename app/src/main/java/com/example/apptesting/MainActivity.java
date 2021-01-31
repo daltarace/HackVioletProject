@@ -11,6 +11,7 @@ import com.android.volley.toolbox.HttpResponse;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.barhopper.deeplearning.BarcodeDetectorClientOptions;
 import com.google.mlkit.vision.barcode.Barcode;
 //import com.google.android.libraries.barhopper.Barcode;
 
@@ -151,9 +152,8 @@ public class MainActivity extends AppCompatActivity {
         BarcodeScannerOptions options =
                 new BarcodeScannerOptions.Builder()
                         .setBarcodeFormats(
-                                Barcode.FORMAT_QR_CODE,
-                                Barcode.FORMAT_AZTEC)
-
+                                Barcode.FORMAT_ALL_FORMATS
+                        )
                         .build();
 
         //}
