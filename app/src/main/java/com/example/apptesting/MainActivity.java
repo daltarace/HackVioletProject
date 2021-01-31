@@ -10,6 +10,9 @@ import android.util.Log;
 import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -36,8 +39,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+
     public void goToAddForm(View view){
         Intent intent = new Intent(this, AddItem.class);
+        //sample write data code snippet
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference myRef = database.getReference("message");
+//
+//        myRef.setValue("Hello, World!");
         startActivity(intent);
 
     }
@@ -57,4 +66,6 @@ public class MainActivity extends AppCompatActivity {
     public void showAbout(View view) {
         Log.d(LOG_TAG, "Button clicked!");
     }
+
+
 }

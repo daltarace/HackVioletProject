@@ -14,11 +14,11 @@
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=
-                    "com.example.android.twoactivities.MainActivity" />
+                android:value="com.example.apptesting.MainActivity" />
         </activity>
-        <activity android:name=".AddItem" />
-        <activity android:name=".DisplayMessageActivity" />
+        <activity android:name=".AddItem" android:parentActivityName=".MainActivity"/>
+        <activity android:name=".DisplayMessageActivity"
+            />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
