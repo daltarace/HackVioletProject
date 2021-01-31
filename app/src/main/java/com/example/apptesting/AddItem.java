@@ -22,6 +22,9 @@ import java.util.Date;
 import java.util.List;
 
 import android.R.id;
+
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -83,6 +86,7 @@ public class AddItem extends AppCompatActivity {
             imageView = (ImageView)findViewById(R.id.barcodeImg);
             imageView.setImageBitmap(imageBitmap);
 
+
             imageFromBitmap(imageBitmap); //check this here
 
             scanBarcodes(image); //CHECK THIS HERE
@@ -95,6 +99,17 @@ public class AddItem extends AppCompatActivity {
             //toast.show();
 
 
+
+
+            //remove & replace scan code button upon replace operation but keep id same - work-in-progress
+//            View scanCodeBtn = findViewById(R.id.scanBarcodeBtn);
+//            ViewGroup parent = (ViewGroup)scanCodeBtn.getParent();
+//            int scanBtnId = scanCodeBtn.getId();
+//            int index = parent.indexOfChild(scanCodeBtn);
+//            parent.removeView(scanCodeBtn);
+//            scanCodeBtn = getLayoutInflater().inflate(R.layout.activity_add_item, parent, false);
+//            parent.addView(scanCodeBtn, index);
+//            scanCodeBtn.setId(scanBtnId);
 
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -112,9 +127,9 @@ public class AddItem extends AppCompatActivity {
     }
 
 
-    private void writeNewProduct(String name, String exprirationDate) {
+    private void writeNewProduct(String name, String expirationDate) {
         String key = itemsRef.push().getKey();
-        itemsRef.child(key).setValue(new Item(name, exprirationDate));
+        itemsRef.child(key).setValue(new Item(name, expirationDate));
     }
 
     private void isExpired(String dateYear) {
