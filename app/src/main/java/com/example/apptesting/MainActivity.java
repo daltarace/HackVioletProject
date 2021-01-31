@@ -86,6 +86,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -106,30 +107,34 @@ public class MainActivity extends AppCompatActivity {
 
 
         HashMap<String, String> itemList = new HashMap<>();
-        itemList.put("Item 1", "Expired in 1 month");
-        itemList.put("Item 2", "Expired in 2 month");
-        itemList.put("Item 3", "Expired in 3 month");
-        itemList.put("Item 4", "Expired in 4 month");
-        itemList.put("Item 5", "Expired in 5 month");
-        itemList.put("Item 6", "Expired in 6 month");
-        itemList.put("Item 7", "Expired in 7 month");
-        itemList.put("Item 8", "Expired in 8 month");
+        itemList.put("Item 1", "Exp: 1 month");
+        itemList.put("Item 2", "Exp: 2 month");
+        itemList.put("Item 3", "Exp: 3 month");
+        itemList.put("Item 4", "Exp: 4 month");
+        itemList.put("Item 5", "Exp: 5 month");
+        itemList.put("Item 6", "Exp: 6 month");
+        itemList.put("Item 7", "Exp: 7 month");
         ArrayList<String> arrayList = new ArrayList<>();
-
-        arrayList.add("Item 1");
-        arrayList.add("Item 2");
-        arrayList.add("Item 3");
-        arrayList.add("Item 4");
-        arrayList.add("Item 5");
-        arrayList.add("Item 6");
-        arrayList.add("Item 7");
 
         List<HashMap<String,String>> listItems = new ArrayList<>();
 
-//        SimpleAdapter simpleAdapter = new SimpleAdapter(this, listItems,
-                R.layout.list_item, arrayList);
+        SimpleAdapter simpleAdapter = new SimpleAdapter(this, listItems,
+                R.layout.list_item,
+                new String[]{"firstLine", "secondLine"},
+                new int[]{R.id.itemHeader, R.id.itemSub});
+
+        Iterator it = itemList.entrySet().iterator();
+        while(it.hasNext()){
+            HashMap<String,String> resultMap = new HashMap<>();
+            Map.Entry pair = (Map.Entry) it.next();
+            resultMap.put("firstLine", pair.getKey().toString());
+            resultMap.put("secondLine", pair.getValue().toString());
+            listItems.add(resultMap);
+        }
+        listView.setAdapter(simpleAdapter);
+
 //not done
-        listView.setAdapter(arrayAdapter);
+//        listView.setAdapter(arrayAdapter);
     }
 
     InputImage image;
