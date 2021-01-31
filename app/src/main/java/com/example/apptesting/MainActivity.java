@@ -56,5 +56,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void showAbout(View view) {
         Log.d(LOG_TAG, "Button clicked!");
+        Intent intent = new Intent(this, SecondAboutActivity.class);
+        startActivity(intent);
+
     }
 }

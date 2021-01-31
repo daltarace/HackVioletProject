@@ -30,4 +30,5 @@
         tools:layout_editor_absoluteX="90dp"
         tools:layout_editor_absoluteY="346dp"
         tools:text="It can additionally send you a notification anytime one of your items expires and reminds you to purchase a new one." />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
