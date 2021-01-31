@@ -1,6 +1,7 @@
 package com.example.apptesting;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
@@ -10,14 +11,18 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -145,6 +150,7 @@ public class AddItem extends AppCompatActivity {
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void addItemToFB(View view){
         EditText expirationDateEditText = (EditText) findViewById(R.id.editTextExpiration);
         EditText nameEditText = (EditText) findViewById(R.id.editName);
@@ -155,14 +161,36 @@ public class AddItem extends AppCompatActivity {
         if(itemName.equals(""))
         {
             Toast.makeText(getApplicationContext(), "Please fill out item's name", Toast.LENGTH_SHORT).show();
-        }else if(expirationDate.equals("") /*&& pkgDateEditText.equals("") || expirationDate.equals("") && moExpEditText.equals("")*/ ) {
+        }else if(expirationDate.equals("") && pkgDateEditText.getText().toString().equals("") || expirationDate.equals("") && moExpEditText.getText().toString().equals("") ) {
             Toast.makeText(getApplicationContext(), "Please fill out the expiration information", Toast.LENGTH_SHORT).show();
-        }else if(!pkgDateEditText.equals("") && !moExpEditText.equals("")){
-            //calculate month & year of expiration
         }
         else{
-            writeNewProduct(itemName, expirationDate);
-            Toast.makeText(getApplicationContext(), "Add Item successfully", Toast.LENGTH_SHORT).show();
+            if(!expirationDate.equals("")) {
+                writeNewProduct(itemName, expirationDate);
+                Toast.makeText(getApplicationContext(), "Add Item successfully", Toast.LENGTH_SHORT).show();
+            }else {
+                if (!pkgDateEditText.getText().equals("") && !moExpEditText.equals("")) {
+                }
+
+                SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy");
+                Calendar c = Calendar.getInstance();
+                try{
+                    //Setting the date to the given date
+                    c.setTime(sdf.parse(pkgDateEditText.getText().toString()));
+                }catch(ParseException e){
+                    Toast.makeText(getApplicationContext(), "Make sure input is correct", Toast.LENGTH_SHORT).show();
+                }
+                try {
+                    c.add(Calendar.MONTH, Integer.valueOf(moExpEditText.getText().toString()));
+                    String calcExpDate = sdf.format(c.getTime());
+                    writeNewProduct(itemName, calcExpDate);
+                    Toast.makeText(getApplicationContext(), "Add Item successfully", Toast.LENGTH_SHORT).show();
+                }catch(Exception e){
+                    Toast.makeText(getApplicationContext(), "Please fill out the expiration information", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
         }
     }
 
