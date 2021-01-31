@@ -169,6 +169,38 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+        HashMap<String, String> itemList = new HashMap<>();
+        itemList.put("Item 1", "Exp: 1 month");
+        itemList.put("Item 2", "Exp: 2 month");
+        itemList.put("Item 3", "Exp: 3 month");
+        itemList.put("Item 4", "Exp: 4 month");
+        itemList.put("Item 5", "Exp: 5 month");
+        itemList.put("Item 6", "Exp: 6 month");
+        itemList.put("Item 7", "Exp: 7 month");
+        ArrayList<String> arrayList = new ArrayList<>();
+
+        List<HashMap<String,String>> listItems = new ArrayList<>();
+
+        SimpleAdapter simpleAdapter = new SimpleAdapter(this, listItems,
+                R.layout.list_item,
+                new String[]{"firstLine", "secondLine"},
+                new int[]{R.id.itemHeader, R.id.itemSub});
+
+        Iterator it = itemList.entrySet().iterator();
+        while(it.hasNext()){
+            HashMap<String,String> resultMap = new HashMap<>();
+            Map.Entry pair = (Map.Entry) it.next();
+            resultMap.put("firstLine", pair.getKey().toString());
+            resultMap.put("secondLine", pair.getValue().toString());
+            listItems.add(resultMap);
+        }
+        listView.setAdapter(simpleAdapter);
+
+
+//not done
+//        listView.setAdapter(arrayAdapter);
+
     }
 
 
@@ -178,7 +210,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     InputImage image;
-
     private void imageFromBitmap(Bitmap bitmap) {
         int rotationDegree = 0;
         // [START image_from_bitmap]
@@ -191,59 +222,15 @@ public class MainActivity extends AppCompatActivity {
         BarcodeScannerOptions options =
                 new BarcodeScannerOptions.Builder()
                         .setBarcodeFormats(
-                                Barcode.FORMAT_QR_CODE,
-                                Barcode.FORMAT_AZTEC)
+                                Barcode.FORMAT_ALL_FORMATS)
+.build();
 
-                        .build();
 
-        //}
+        //start of barcode reader new
 
-        BarcodeScanner scanner = BarcodeScanning.getClient();
-
-        Task<List<Barcode>> result = scanner.process(image)
-                .addOnSuccessListener(new OnSuccessListener<List<Barcode>>() {
-                    @Override
-                    public void onSuccess(List<Barcode> barcodes) {
-                        // Task completed successfully
-                        // [START_EXCLUDE]
-                        // [START get_barcodes]
-                        for (Barcode barcode : barcodes) {
-                            Rect bounds = barcode.getBoundingBox();
-                            Point[] corners = barcode.getCornerPoints();
-
-                            String rawValue = barcode.getRawValue();
-
-                            int valueType = barcode.getValueType();
-                            // See API reference for complete list of supported types
-                            switch (valueType) {
-                                case Barcode.TYPE_WIFI:
-                                    String ssid = barcode.getWifi().getSsid();
-                                    String password = barcode.getWifi().getPassword();
-                                    int type = barcode.getWifi().getEncryptionType();
-                                    break;
-                                case Barcode.TYPE_URL:
-                                    String title = barcode.getUrl().getTitle();
-                                    String url = barcode.getUrl().getUrl();
-                                    break;
-                                case Barcode.TYPE_PRODUCT:
-                                    String value = barcode.getDisplayValue(); //Not very sure how to get the value
-                                    Toast.makeText(getApplicationContext(), value, Toast.LENGTH_SHORT);
-                                    break;
-                            }
-                        }
-                        // [END get_barcodes]
-                        // [END_EXCLUDE]
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // Task failed with an exception
-                        // ...
-                    }
-                });
-        // [END run_detector]
+        //end of barcode reader new
     }
+    //this is where the barcode reader used to be
 
 
     //end barcode
@@ -317,6 +304,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
 }
+
+
+
+//}
+
 
