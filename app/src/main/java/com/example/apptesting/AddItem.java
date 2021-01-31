@@ -204,14 +204,12 @@ public class AddItem extends AppCompatActivity {
                         // Task completed successfully
                         // [START_EXCLUDE]
                         // [START get_barcodes]
-                        Context context = getApplicationContext();
-                        int duration = Toast.LENGTH_SHORT;
+
 
                         int barcodesize = barcodes.size();
                         String barcodeSizeTest = String.valueOf(barcodesize);
-                        Toast toast = Toast.makeText(context, barcodeSizeTest , duration);
-                        toast.show();
-                        //TOAST HERE ONLY PRINTS 0 as the barcodes size
+
+                        //TOAST HERE ONLY PRINTS 0 as the barcodes size, but 1 for qr code
 
                         for (Barcode barcode : barcodes) {
                             Rect bounds = barcode.getBoundingBox();
@@ -228,6 +226,8 @@ public class AddItem extends AppCompatActivity {
                             // See API reference for complete list of supported types
                             switch (valueType) {
 
+
+
                                 case Barcode.TYPE_WIFI:
                                     String ssid = barcode.getWifi().getSsid();
                                     String password = barcode.getWifi().getPassword();
@@ -236,11 +236,21 @@ public class AddItem extends AppCompatActivity {
                                 case Barcode.TYPE_URL:
                                     String title = barcode.getUrl().getTitle();
                                     String url = barcode.getUrl().getUrl();
+
+
+
                                     break;
                                 case Barcode.TYPE_PRODUCT:
-                                    String value = barcode.getDisplayValue(); //Not very sure how to get the value
+                                     int value = barcode.getValueType();
+
+                                    Context context = getApplicationContext();
+                                    int duration = Toast.LENGTH_SHORT;
+                                    Toast toast = Toast.makeText(context, value, duration);
+                                    toast.show();
+                                            //getDisplayValue(); //Not very sure how to get the value
 
                                     //Toast.makeText(getApplicationContext(), value, Toast.LENGTH_SHORT);
+
 
                                     break;
                             }
