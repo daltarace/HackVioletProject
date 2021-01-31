@@ -43,4 +43,6 @@ public class DatePickerFragment extends DialogFragment
         // Do something with the date chosen by the user
         ((EditText) getActivity().findViewById(ID)).setText(String.valueOf(month+1)+"/"+String.valueOf(year));
     }
+
+
 }

@@ -64,6 +64,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.os.Bundle;
@@ -93,18 +94,17 @@ public class MainActivity extends AppCompatActivity {
         image = InputImage.fromBitmap(bitmap, rotationDegree);
         // [END image_from_bitmap]
     }
-
-        private void scanBarcodes(InputImage image) {
+    private void scanBarcodes(InputImage image) {
 
         BarcodeScannerOptions options =
                 new BarcodeScannerOptions.Builder()
                         .setBarcodeFormats(
-        Barcode.FORMAT_QR_CODE,
-                Barcode.FORMAT_AZTEC)
+                                Barcode.FORMAT_QR_CODE,
+                                Barcode.FORMAT_AZTEC)
 
                         .build();
 
-        }
+        //}
 
         BarcodeScanner scanner = BarcodeScanning.getClient();
 
@@ -147,6 +147,16 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
         // [END run_detector]
+    }
+
+
+
+
+
+
+
+
+
 
     //end barcode
     public void goToAddForm(View view){
@@ -175,4 +185,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
+
+
+
 }
+
