@@ -4,8 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
+
+import android.provider.MediaStore;
 import android.view.View;
 
 import java.text.SimpleDateFormat;
@@ -24,7 +28,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import android.widget.ImageView;
+
+
 public class AddItem extends AppCompatActivity {
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    private ImageView imageView;
     List<Item> itemList;
     private DatabaseReference mDatabase;
     private DatabaseReference itemsRef;
@@ -38,6 +47,32 @@ public class AddItem extends AppCompatActivity {
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         itemsRef = FirebaseDatabase.getInstance().getReference().child("items");
+    }
+
+    //from given code in android developers website
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        try {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        } catch (ActivityNotFoundException e) {
+            // display error state to the user
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            imageView = (ImageView)findViewById(R.id.barcodeImg);
+            imageView.setImageBitmap(imageBitmap);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+
+    public void scanBarcode(View view){
+        dispatchTakePictureIntent();
     }
 
 
