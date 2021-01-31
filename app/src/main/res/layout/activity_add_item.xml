@@ -1,103 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context=".AddItem">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddItem">
 
-<EditText
-    android:id="@+id/editName"
-    android:layout_width="330dp"
-    android:layout_height="45dp"
-    android:layout_marginStart="40dp"
-    android:layout_marginTop="96dp"
-    android:ems="10"
-    android:hint="Enter name of product"
-    android:inputType="textPersonName"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+    <EditText
+        android:id="@+id/editName"
+        android:layout_width="330dp"
+        android:layout_height="45dp"
+        android:ems="10"
+        android:hint="Enter name of product"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.09" />
 
-<Button
-    android:id="@+id/button"
-    android:layout_width="286dp"
-    android:layout_height="52dp"
-    android:layout_marginStart="60dp"
-    android:layout_marginTop="20dp"
-    android:text="Scan Barcode"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/textView"
-    app:rippleColor="#FFFFFF" />
+    <Button
+        android:id="@+id/scanBarcodeBtn"
+        android:layout_width="286dp"
+        android:layout_height="52dp"
+        android:text="Scan Barcode"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.254"
+        app:rippleColor="#FFFFFF" />
 
-<Button
-    android:id="@+id/button2"
-    android:layout_width="334dp"
-    android:layout_height="58dp"
-    android:layout_marginStart="36dp"
-    android:layout_marginTop="40dp"
-    android:text="Add Item"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/editTextNumber" />
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="334dp"
+        android:layout_height="58dp"
+        android:text="Add Item"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.92" />
 
-<EditText
-    android:id="@+id/editTextDate"
-    android:layout_width="326dp"
-    android:layout_height="45dp"
-    android:layout_marginStart="40dp"
-    android:layout_marginTop="20dp"
-    android:ems="10"
-    android:hint="Packaging date"
-    android:inputType="date"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/textView2" />
+    <EditText
+        android:id="@+id/editTextDate"
+        android:layout_width="326dp"
+        android:layout_height="45dp"
+        android:ems="10"
+        android:focusableInTouchMode="false"
+        android:hint="Packaging date"
+        android:inputType="date"
+        android:onClick="showDatePickerDialog"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.529"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.678" />
 
-<EditText
-    android:id="@+id/editTextNumber"
-    android:layout_width="323dp"
-    android:layout_height="45dp"
-    android:layout_marginStart="40dp"
-    android:layout_marginTop="18dp"
-    android:ems="10"
-    android:hint="Months till expiration"
-    android:inputType="number"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
+    <EditText
+        android:id="@+id/editTextNumber"
+        android:layout_width="326dp"
+        android:layout_height="45dp"
+        android:ems="10"
+        android:hint="Months till expiration"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.778" />
 
-<TextView
-    android:id="@+id/textView2"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="192dp"
-    android:layout_marginTop="20dp"
-    android:text="OR"
-    android:textColorHint="#0E0E0E"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/editTextExpiration" />
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OR"
+        android:textColorHint="#0E0E0E"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.581" />
 
-<EditText
-    android:id="@+id/editTextExpiration"
-    android:layout_width="326dp"
-    android:layout_height="45dp"
-    android:layout_marginStart="40dp"
-    android:layout_marginTop="96dp"
-    android:ems="10"
-    android:hint="Expiration date"
-    android:focusableInTouchMode="false"
-    android:inputType="date"
-    android:onClick="showDatePickerDialog"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/button" />
+    <EditText
+        android:id="@+id/editTextExpiration"
+        android:layout_width="326dp"
+        android:layout_height="45dp"
+        android:ems="10"
+        android:focusableInTouchMode="false"
+        android:hint="Expiration date"
+        android:inputType="date"
+        android:onClick="showDatePickerDialog"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.47"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.485" />
 
-<TextView
-    android:id="@+id/textView"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="192dp"
-    android:layout_marginTop="20dp"
-    android:text="OR"
-    android:textColorHint="#0E0E0E"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/editName" />
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OR"
+        android:textColorHint="#0E0E0E"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.182" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
