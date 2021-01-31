@@ -6,6 +6,7 @@ import androidx.fragment.app.DialogFragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -25,6 +26,9 @@ import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
+    private static final String LOG_TAG =
+            MainActivity.class.getSimpleName();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,4 +54,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void showAbout(View view) {
+        Log.d(LOG_TAG, "Button clicked!");
+    }
 }

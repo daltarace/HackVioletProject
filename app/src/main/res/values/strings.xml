@@ -7,4 +7,5 @@
     <string name="edit_message">Enter a message</string>
     <string name="button_send">Send</string>
     <string name="pick_time">Pick your time</string>
+    <string name="aboutString">About</string>
 </resources>
