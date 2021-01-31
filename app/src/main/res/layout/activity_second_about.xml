@@ -8,9 +8,9 @@
 
     <TextView
         android:id="@+id/textView6"
-        android:layout_width="299dp"
-        android:layout_height="107dp"
-        android:text="This app is great for helping track the expiration dates for all your food, cosmetic products, and more! "
+        android:layout_width="300dp"
+        android:layout_height="151dp"
+        android:text="This app has the functionality to help keep track of the expiration dates for items such as your food, cosmetic products, medicine, and more! "
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,7 +22,7 @@
         android:id="@+id/textView7"
         android:layout_width="304dp"
         android:layout_height="103dp"
-        android:text="It can additionally send you a notification anytime one of your items expires and reminds you to purchase a new one."
+        android:text="With a barcode/QR code scanner and a Firebase database- this app is a great way for you to stay updated on when to repurchase or replace."
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
