@@ -20,7 +20,7 @@ tools:context=".AddItem">
     app:layout_constraintTop_toTopOf="parent" />
 
 <Button
-    android:id="@+id/button"
+    android:id="@+id/scanBarcodeBtn"
     android:layout_width="286dp"
     android:layout_height="52dp"
     android:layout_marginStart="60dp"
@@ -40,17 +40,19 @@ tools:context=".AddItem">
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/editTextNumber" />
 
-<EditText
-    android:id="@+id/editTextDate"
-    android:layout_width="326dp"
-    android:layout_height="45dp"
-    android:layout_marginStart="40dp"
-    android:layout_marginTop="20dp"
-    android:ems="10"
-    android:hint="Packaging date"
-    android:inputType="date"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/textView2" />
+    <EditText
+        android:id="@+id/editTextDate"
+        android:layout_width="326dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:focusableInTouchMode="false"
+        android:hint="Packaging date"
+        android:inputType="date"
+        android:onClick="showDatePickerDialog"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
 <EditText
     android:id="@+id/editTextNumber"
@@ -87,7 +89,7 @@ tools:context=".AddItem">
     android:inputType="date"
     android:onClick="showDatePickerDialog"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/button" />
+    app:layout_constraintTop_toBottomOf="@+id/scanBarcodeBtn" />
 
 <TextView
     android:id="@+id/textView"

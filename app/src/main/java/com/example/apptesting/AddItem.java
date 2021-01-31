@@ -27,9 +27,7 @@ public class AddItem extends AppCompatActivity {
     }
 
     public void showDatePickerDialog(View view) {
-
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
-
     }
 }
