@@ -56,6 +56,7 @@ import com.google.mlkit.vision.common.InputImage;
 
 import android.widget.ImageView;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 
@@ -306,7 +307,11 @@ public class AddItem extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        textView.setText(response.toString());
+                        try {
+                            textView.setText(response.getJSONObject("items").getString("title"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 },
                 new Response.ErrorListener() {
