@@ -128,15 +128,13 @@ public class MainActivity extends AppCompatActivity {
                     itemList.put(it.getName(), it.getExpirationDate());
                 }
 
-                ArrayList<String> arrayList = new ArrayList<>();
+
                 List<HashMap<String,String>> listItems = new ArrayList<>();
 
                 SimpleAdapter simpleAdapter = new SimpleAdapter(currContext, listItems,
                         R.layout.list_item,
                         new String[]{"firstLine", "secondLine"},
                         new int[]{R.id.itemHeader, R.id.itemSub});
-
-
 
                 Iterator it = itemList.entrySet().iterator();
                 while(it.hasNext()){
@@ -147,7 +145,6 @@ public class MainActivity extends AppCompatActivity {
 
                     listItems.add(resultMap);
                 }
-
 
                 listView.setAdapter(simpleAdapter);
             }
