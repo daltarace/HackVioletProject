@@ -11,6 +11,11 @@ import com.android.volley.toolbox.HttpResponse;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.mlkit.vision.barcode.Barcode;
 //import com.google.android.libraries.barhopper.Barcode;
 
@@ -86,6 +91,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -104,33 +110,75 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         listView = (ListView) findViewById(R.id.listview);
 
+        //Start of code to fetch from DB
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference refItems = database.getReference().child("items");
+        Context currContext = this;
 
-        HashMap<String, String> itemList = new HashMap<>();
-        itemList.put("Item 1", "Expired in 1 month");
-        itemList.put("Item 2", "Expired in 2 month");
-        itemList.put("Item 3", "Expired in 3 month");
-        itemList.put("Item 4", "Expired in 4 month");
-        itemList.put("Item 5", "Expired in 5 month");
-        itemList.put("Item 6", "Expired in 6 month");
-        itemList.put("Item 7", "Expired in 7 month");
-        itemList.put("Item 8", "Expired in 8 month");
-        ArrayList<String> arrayList = new ArrayList<>();
+        System.out.println(refItems);
+        refItems.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                HashMap<String, String> itemList = new HashMap<>();
 
-        arrayList.add("Item 1");
-        arrayList.add("Item 2");
-        arrayList.add("Item 3");
-        arrayList.add("Item 4");
-        arrayList.add("Item 5");
-        arrayList.add("Item 6");
-        arrayList.add("Item 7");
+                for (DataSnapshot childSnapshot: dataSnapshot.getChildren()) {
+                    Item it = childSnapshot.getValue(Item.class);
+                    System.out.println(it.getExpirationDate());
+                    itemList.put(it.getName(), it.getExpirationDate());
+                }
 
-        List<HashMap<String,String>> listItems = new ArrayList<>();
+                ArrayList<String> arrayList = new ArrayList<>();
+                List<HashMap<String,String>> listItems = new ArrayList<>();
 
-//        SimpleAdapter simpleAdapter = new SimpleAdapter(this, listItems,
-//                R.layout.list_item, arrayList);
-//not done
-//        listView.setAdapter(arrayAdapter);
+                SimpleAdapter simpleAdapter = new SimpleAdapter(currContext, listItems,
+                        R.layout.list_item,
+                        new String[]{"firstLine", "secondLine"},
+                        new int[]{R.id.itemHeader, R.id.itemSub});
+
+
+
+                Iterator it = itemList.entrySet().iterator();
+                while(it.hasNext()){
+                    HashMap<String,String> resultMap = new HashMap<>();
+                    Map.Entry pair = (Map.Entry) it.next();
+                    resultMap.put("firstLine", pair.getKey().toString());
+                    resultMap.put("secondLine", pair.getValue().toString());
+
+                    listItems.add(resultMap);
+                }
+
+
+                listView.setAdapter(simpleAdapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+        //End of code to fetch from DB
+
+
+
+
+
+//        itemList.put("Item 2", "Exp: 2 month");
+//        itemList.put("Item 3", "Exp: 3 month");
+//        itemList.put("Item 4", "Exp: 4 month");
+//        itemList.put("Item 5", "Exp: 5 month");
+//        itemList.put("Item 6", "Exp: 6 month");
+//        itemList.put("Item 7", "Exp: 7 month");
+
+
+
+
     }
+
+
+
+
+
+
 
     InputImage image;
 
