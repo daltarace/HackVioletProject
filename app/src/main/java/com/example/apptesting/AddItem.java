@@ -14,6 +14,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.R.id;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 public class AddItem extends AppCompatActivity {
@@ -43,6 +45,16 @@ public class AddItem extends AppCompatActivity {
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             imageView = (ImageView)findViewById(R.id.barcodeImg);
             imageView.setImageBitmap(imageBitmap);
+
+            //remove & replace scan code button upon replace operation but keep id same - work-in-progress
+//            View scanCodeBtn = findViewById(R.id.scanBarcodeBtn);
+//            ViewGroup parent = (ViewGroup)scanCodeBtn.getParent();
+//            int scanBtnId = scanCodeBtn.getId();
+//            int index = parent.indexOfChild(scanCodeBtn);
+//            parent.removeView(scanCodeBtn);
+//            scanCodeBtn = getLayoutInflater().inflate(R.layout.activity_add_item, parent, false);
+//            parent.addView(scanCodeBtn, index);
+//            scanCodeBtn.setId(scanBtnId);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
