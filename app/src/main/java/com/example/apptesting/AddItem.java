@@ -9,6 +9,8 @@ import android.view.View;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import android.R.id;
+
 public class AddItem extends AppCompatActivity {
 
     @Override
@@ -27,7 +29,7 @@ public class AddItem extends AppCompatActivity {
     }
 
     public void showDatePickerDialog(View view) {
-        DialogFragment newFragment = new DatePickerFragment();
+        DialogFragment newFragment = new DatePickerFragment(view.getId());
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 }

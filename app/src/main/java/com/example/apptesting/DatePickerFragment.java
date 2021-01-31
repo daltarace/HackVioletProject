@@ -17,7 +17,7 @@ import java.util.Calendar;
 
 public class DatePickerFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
-//    private int id;
+    private int ID;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -32,13 +32,15 @@ public class DatePickerFragment extends DialogFragment
 
     }
 
-//    DatePickerFragment(int idNum){
-//        int id = idNum;
-//    }
+    //Overloaded constructor with view id parameter
+    DatePickerFragment(int idNum){
+        super();
+        ID = idNum;
+    }
 
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
         // Do something with the date chosen by the user
-        ((EditText) getActivity().findViewById(R.id.editTextExpiration)).setText(String.valueOf(month+1)+"/"+String.valueOf(year));
+        ((EditText) getActivity().findViewById(ID)).setText(String.valueOf(month+1)+"/"+String.valueOf(year));
     }
 }
