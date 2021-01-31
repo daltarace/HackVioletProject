@@ -12,6 +12,11 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.barhopper.deeplearning.BarcodeDetectorClientOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.mlkit.vision.barcode.Barcode;
 //import com.google.android.libraries.barhopper.Barcode;
 
@@ -106,6 +111,68 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         listView = (ListView) findViewById(R.id.listview);
 
+        //Start of code to fetch from DB
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference refItems = database.getReference().child("items");
+        Context currContext = this;
+
+        System.out.println(refItems);
+        refItems.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                HashMap<String, String> itemList = new HashMap<>();
+
+                for (DataSnapshot childSnapshot: dataSnapshot.getChildren()) {
+                    Item it = childSnapshot.getValue(Item.class);
+                    System.out.println(it.getExpirationDate());
+                    itemList.put(it.getName(), it.getExpirationDate());
+                }
+
+                ArrayList<String> arrayList = new ArrayList<>();
+                List<HashMap<String,String>> listItems = new ArrayList<>();
+
+                SimpleAdapter simpleAdapter = new SimpleAdapter(currContext, listItems,
+                        R.layout.list_item,
+                        new String[]{"firstLine", "secondLine"},
+                        new int[]{R.id.itemHeader, R.id.itemSub});
+
+
+
+                Iterator it = itemList.entrySet().iterator();
+                while(it.hasNext()){
+                    HashMap<String,String> resultMap = new HashMap<>();
+                    Map.Entry pair = (Map.Entry) it.next();
+                    resultMap.put("firstLine", pair.getKey().toString());
+                    resultMap.put("secondLine", pair.getValue().toString());
+
+                    listItems.add(resultMap);
+                }
+
+
+                listView.setAdapter(simpleAdapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+        //End of code to fetch from DB
+
+
+
+
+
+//        itemList.put("Item 2", "Exp: 2 month");
+//        itemList.put("Item 3", "Exp: 3 month");
+//        itemList.put("Item 4", "Exp: 4 month");
+//        itemList.put("Item 5", "Exp: 5 month");
+//        itemList.put("Item 6", "Exp: 6 month");
+//        itemList.put("Item 7", "Exp: 7 month");
+
+
+
+
 
         HashMap<String, String> itemList = new HashMap<>();
         itemList.put("Item 1", "Exp: 1 month");
@@ -134,12 +201,19 @@ public class MainActivity extends AppCompatActivity {
         }
         listView.setAdapter(simpleAdapter);
 
+
 //not done
 //        listView.setAdapter(arrayAdapter);
+
     }
 
-    InputImage image;
 
+
+
+
+
+
+    InputImage image;
     private void imageFromBitmap(Bitmap bitmap) {
         int rotationDegree = 0;
         // [START image_from_bitmap]
@@ -152,58 +226,14 @@ public class MainActivity extends AppCompatActivity {
         BarcodeScannerOptions options =
                 new BarcodeScannerOptions.Builder()
                         .setBarcodeFormats(
-                                Barcode.FORMAT_ALL_FORMATS
-                        )
-                        .build();
+                                Barcode.FORMAT_ALL_FORMATS)
+.build();
 
-        //}
+        //start of barcode reader new
 
-        BarcodeScanner scanner = BarcodeScanning.getClient();
-
-        Task<List<Barcode>> result = scanner.process(image)
-                .addOnSuccessListener(new OnSuccessListener<List<Barcode>>() {
-                    @Override
-                    public void onSuccess(List<Barcode> barcodes) {
-                        // Task completed successfully
-                        // [START_EXCLUDE]
-                        // [START get_barcodes]
-                        for (Barcode barcode : barcodes) {
-                            Rect bounds = barcode.getBoundingBox();
-                            Point[] corners = barcode.getCornerPoints();
-
-                            String rawValue = barcode.getRawValue();
-
-                            int valueType = barcode.getValueType();
-                            // See API reference for complete list of supported types
-                            switch (valueType) {
-                                case Barcode.TYPE_WIFI:
-                                    String ssid = barcode.getWifi().getSsid();
-                                    String password = barcode.getWifi().getPassword();
-                                    int type = barcode.getWifi().getEncryptionType();
-                                    break;
-                                case Barcode.TYPE_URL:
-                                    String title = barcode.getUrl().getTitle();
-                                    String url = barcode.getUrl().getUrl();
-                                    break;
-                                case Barcode.TYPE_PRODUCT:
-                                    String value = barcode.getDisplayValue(); //Not very sure how to get the value
-                                    Toast.makeText(getApplicationContext(), value, Toast.LENGTH_SHORT);
-                                    break;
-                            }
-                        }
-                        // [END get_barcodes]
-                        // [END_EXCLUDE]
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // Task failed with an exception
-                        // ...
-                    }
-                });
-        // [END run_detector]
+        //end of barcode reader new
     }
+    //this is where the barcode reader used to be
 
 
     //end barcode
@@ -274,4 +304,13 @@ public class MainActivity extends AppCompatActivity {
         queue.add(jsonObjectRequest);
     }
 
+
+
+
 }
+
+
+
+//}
+
+
