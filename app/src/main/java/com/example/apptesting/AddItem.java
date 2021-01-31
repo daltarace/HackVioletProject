@@ -204,13 +204,13 @@ public class AddItem extends AppCompatActivity {
                         // Task completed successfully
                         // [START_EXCLUDE]
                         // [START get_barcodes]
-                        Context context = getApplicationContext();
-                        int duration = Toast.LENGTH_SHORT;
+//                        Context context = getApplicationContext();
+//                        int duration = Toast.LENGTH_SHORT;
 
-                        int barcodesize = barcodes.size();
-                        String barcodeSizeTest = String.valueOf(barcodesize);
-                        Toast toast = Toast.makeText(context, barcodeSizeTest , duration);
-                        toast.show();
+//                        int barcodesize = barcodes.size();
+//                        String barcodeSizeTest = String.valueOf(barcodesize);
+//                        Toast toast = Toast.makeText(context, barcodeSizeTest , duration);
+//                        toast.show();
 
                         for (Barcode barcode : barcodes) {
                             Rect bounds = barcode.getBoundingBox();
@@ -219,6 +219,10 @@ public class AddItem extends AppCompatActivity {
                             String rawValue = barcode.getRawValue();
 
                             int valueType = barcode.getValueType();
+
+                            
+                            Toast.makeText(getApplicationContext(), rawValue , Toast.LENGTH_LONG).show();
+
 
 
 
