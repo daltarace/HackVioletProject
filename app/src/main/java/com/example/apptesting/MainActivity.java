@@ -93,7 +93,8 @@ public class MainActivity extends AppCompatActivity {
         image = InputImage.fromBitmap(bitmap, rotationDegree);
         // [END image_from_bitmap]
     }
-    private void scanBarcodes(InputImage image) {
+
+        private void scanBarcodes(InputImage image) {
 
         BarcodeScannerOptions options =
                 new BarcodeScannerOptions.Builder()
@@ -103,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
                         .build();
 
-        //}
+        }
 
         BarcodeScanner scanner = BarcodeScanning.getClient();
 
@@ -146,16 +147,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
         // [END run_detector]
-    }
-
-
-
-
-
-
-
-
-
 
     //end barcode
     public void goToAddForm(View view){

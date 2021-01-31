@@ -10,7 +10,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppTesting">
-        <activity android:name=".SecondAboutActivity">
+<!--        <meta-data-->
+<!--            android:name="com.google.mlkit.vision.DEPENDENCIES"-->
+<!--            android:value="barcode" />-->
+        <activity android:name=".SecondAboutActivity"
             android:label = "Second About Activity"
             android:parentActivityName=".MainActivity">
             <meta-data
