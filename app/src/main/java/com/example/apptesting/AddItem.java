@@ -211,6 +211,7 @@ public class AddItem extends AppCompatActivity {
                         String barcodeSizeTest = String.valueOf(barcodesize);
                         Toast toast = Toast.makeText(context, barcodeSizeTest , duration);
                         toast.show();
+                        //TOAST HERE ONLY PRINTS 0 as the barcodes size
 
                         for (Barcode barcode : barcodes) {
                             Rect bounds = barcode.getBoundingBox();
