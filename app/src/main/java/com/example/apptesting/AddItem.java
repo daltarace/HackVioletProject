@@ -110,14 +110,17 @@ public class AddItem extends AppCompatActivity {
     public void addItemToFB(View view){
         EditText expirationDateEditText = (EditText) findViewById(R.id.editTextExpiration);
         EditText nameEditText = (EditText) findViewById(R.id.editName);
+        EditText pkgDateEditText = (EditText) findViewById(R.id.editPkgDate);
+        EditText moExpEditText = (EditText) findViewById(R.id.editMoExpNumber);
         String expirationDate = expirationDateEditText.getText().toString();
         String itemName = nameEditText.getText().toString();
         if(itemName.equals(""))
         {
             Toast.makeText(getApplicationContext(), "Please fill out item's name", Toast.LENGTH_SHORT).show();
-        }else if(expirationDate.equals("")) {
-
-            Toast.makeText(getApplicationContext(), "Please fill out expiration date", Toast.LENGTH_SHORT).show();
+        }else if(expirationDate.equals("") /*&& pkgDateEditText.equals("") || expirationDate.equals("") && moExpEditText.equals("")*/ ) {
+            Toast.makeText(getApplicationContext(), "Please fill out the expiration information", Toast.LENGTH_SHORT).show();
+        }else if(!pkgDateEditText.equals("") && !moExpEditText.equals("")){
+            //calculate month & year of expiration
         }
         else{
             writeNewProduct(itemName, expirationDate);
