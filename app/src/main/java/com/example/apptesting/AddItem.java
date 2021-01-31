@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 
 import java.text.SimpleDateFormat;
@@ -27,6 +28,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import android.widget.ImageView;
 
@@ -111,4 +114,51 @@ public class AddItem extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Add Item successfully", Toast.LENGTH_SHORT).show();
         }
     }
+
+
+
+
+
+    //to read database
+    // My top posts by number of stars
+    itemsRef.addValueEventListener(new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                // TODO: handle the post
+            }
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+            // Getting Post failed, log a message
+            Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+            // ...
+        }
+    });
+    Query itemsQuery = itemsRef.orderByChild(null);
+    ValueEventListener postListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            // Get Post object and use the values to update the UI
+            Post post = dataSnapshot.getValue(Post.class);
+            // ...
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+            // Getting Post failed, log a message
+            Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+            // ...
+        }
+    };
+    itemsQuery.addValueEventListener();
+
+
+
+
+
+
+
+
 }
