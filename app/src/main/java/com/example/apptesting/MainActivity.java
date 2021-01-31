@@ -261,48 +261,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void getBarCode(View view){
-        fetchProductFromBarcode("190514050377");
-    }
-
-    public void fetchProductFromBarcode(String barcode) {
-        // Instantiate the RequestQueue.
-
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://api.apigenius.io/products/identifiers?upc=" + barcode+"&api_key=c92527de1c1e430096411a8a099d548b";
-        Toast.makeText(getApplicationContext(), url, Toast.LENGTH_LONG).show();
-
-        Toast.makeText(getApplicationContext(), url, Toast.LENGTH_LONG);
-        TextView textView = (TextView) findViewById(R.id.textView4);
-        // Request a string response from the provided URL.
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        textView.setText(response.toString());
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                        textView.setText(error.toString());
-                        //Failure Callback
-
-                    }
-                }) {
-            /** Passing some request headers* */
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("ApiGenius_API_Key", "c92527de1c1e430096411a8a099d548b");
-                return headers;
-            }
-        };
-//API GENIUS KEY: c92527de1c1e430096411a8a099d548b
-        // Add the request to the RequestQueue.
-        queue.add(jsonObjectRequest);
-    }
 
 
 

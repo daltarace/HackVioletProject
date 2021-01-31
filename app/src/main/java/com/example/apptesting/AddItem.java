@@ -19,15 +19,25 @@ import android.view.View;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.R.id;
 
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -45,6 +55,8 @@ import com.google.mlkit.vision.barcode.BarcodeScanning;
 import com.google.mlkit.vision.common.InputImage;
 
 import android.widget.ImageView;
+
+import org.json.JSONObject;
 
 
 public class AddItem extends AppCompatActivity {
@@ -204,13 +216,15 @@ public class AddItem extends AppCompatActivity {
                         // Task completed successfully
                         // [START_EXCLUDE]
                         // [START get_barcodes]
-//                        Context context = getApplicationContext();
-//                        int duration = Toast.LENGTH_SHORT;
+                        Context context = getApplicationContext();
+                        int duration = Toast.LENGTH_SHORT;
 
-//                        int barcodesize = barcodes.size();
-//                        String barcodeSizeTest = String.valueOf(barcodesize);
-//                        Toast toast = Toast.makeText(context, barcodeSizeTest , duration);
-//                        toast.show();
+                        int barcodesize = barcodes.size();
+                        String barcodeSizeTest = String.valueOf(barcodesize);
+                        Toast toast = Toast.makeText(context, barcodeSizeTest , duration);
+                        toast.show();
+                        //TOAST HERE ONLY PRINTS 0 as the barcodes size
+
 
                         for (Barcode barcode : barcodes) {
                             Rect bounds = barcode.getBoundingBox();
@@ -222,7 +236,7 @@ public class AddItem extends AppCompatActivity {
 
                             
                             Toast.makeText(getApplicationContext(), rawValue , Toast.LENGTH_LONG).show();
-
+                            fetchProductFromBarcode(String.valueOf(rawValue));
 
 
 
@@ -264,6 +278,48 @@ public class AddItem extends AppCompatActivity {
 
     //end of barcode reader
 
+    public void getBarCode(View view){
+        fetchProductFromBarcode("190514050377");
+    }
+
+    public void fetchProductFromBarcode(String barcode) {
+        // Instantiate the RequestQueue.
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "https://api.apigenius.io/products/identifiers?upc=" + barcode+"&api_key=c92527de1c1e430096411a8a099d548b";
+        Toast.makeText(getApplicationContext(), url, Toast.LENGTH_LONG).show();
+
+        Toast.makeText(getApplicationContext(), url, Toast.LENGTH_LONG);
+        TextView textView = (TextView) findViewById(R.id.editName);
+        // Request a string response from the provided URL.
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        textView.setText(response.toString());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        textView.setText(error.toString());
+                        //Failure Callback
+
+                    }
+                }) {
+            /** Passing some request headers* */
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("ApiGenius_API_Key", "c92527de1c1e430096411a8a099d548b");
+                return headers;
+            }
+        };
+//API GENIUS KEY: c92527de1c1e430096411a8a099d548b
+        // Add the request to the RequestQueue.
+        queue.add(jsonObjectRequest);
+    }
 
 
 
