@@ -42,11 +42,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToAddForm(View view){
         Intent intent = new Intent(this, AddItem.class);
-        //sample write data code snippet
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference myRef = database.getReference("message");
-//
-//        myRef.setValue("Hello, World!");
         startActivity(intent);
 
     }
