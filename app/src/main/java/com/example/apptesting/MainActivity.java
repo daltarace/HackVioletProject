@@ -1,6 +1,16 @@
 package com.example.apptesting;
 
 import android.os.Bundle;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpResponse;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.mlkit.vision.barcode.Barcode;
 //import com.google.android.libraries.barhopper.Barcode;
 
@@ -29,8 +39,6 @@ import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.barcode.BarcodeScanner;
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions;
 import com.google.mlkit.vision.barcode.BarcodeScanning;
-
-
 
 
 import android.app.Activity;
@@ -66,11 +74,20 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.os.Bundle;
+import android.widget.Toast;
+
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
@@ -79,21 +96,51 @@ public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
     private static final String LOG_TAG =
             MainActivity.class.getSimpleName();
-
+    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        listView = (ListView) findViewById(R.id.listview);
+
+
+        HashMap<String, String> itemList = new HashMap<>();
+        itemList.put("Item 1", "Expired in 1 month");
+        itemList.put("Item 2", "Expired in 2 month");
+        itemList.put("Item 3", "Expired in 3 month");
+        itemList.put("Item 4", "Expired in 4 month");
+        itemList.put("Item 5", "Expired in 5 month");
+        itemList.put("Item 6", "Expired in 6 month");
+        itemList.put("Item 7", "Expired in 7 month");
+        itemList.put("Item 8", "Expired in 8 month");
+        ArrayList<String> arrayList = new ArrayList<>();
+
+        arrayList.add("Item 1");
+        arrayList.add("Item 2");
+        arrayList.add("Item 3");
+        arrayList.add("Item 4");
+        arrayList.add("Item 5");
+        arrayList.add("Item 6");
+        arrayList.add("Item 7");
+
+        List<HashMap<String,String>> listItems = new ArrayList<>();
+
+//        SimpleAdapter simpleAdapter = new SimpleAdapter(this, listItems,
+                R.layout.list_item, arrayList);
+//not done
+        listView.setAdapter(arrayAdapter);
     }
 
     InputImage image;
-    private void imageFromBitmap (Bitmap bitmap){
+
+    private void imageFromBitmap(Bitmap bitmap) {
         int rotationDegree = 0;
         // [START image_from_bitmap]
         image = InputImage.fromBitmap(bitmap, rotationDegree);
         // [END image_from_bitmap]
     }
+
     private void scanBarcodes(InputImage image) {
 
         BarcodeScannerOptions options =
@@ -115,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
                         // Task completed successfully
                         // [START_EXCLUDE]
                         // [START get_barcodes]
-                        for (Barcode barcode: barcodes) {
+                        for (Barcode barcode : barcodes) {
                             Rect bounds = barcode.getBoundingBox();
                             Point[] corners = barcode.getCornerPoints();
 
@@ -132,6 +179,10 @@ public class MainActivity extends AppCompatActivity {
                                 case Barcode.TYPE_URL:
                                     String title = barcode.getUrl().getTitle();
                                     String url = barcode.getUrl().getUrl();
+                                    break;
+                                case Barcode.TYPE_PRODUCT:
+                                    String value = barcode.getDisplayValue(); //Not very sure how to get the value
+                                    Toast.makeText(getApplicationContext(), value, Toast.LENGTH_SHORT);
                                     break;
                             }
                         }
@@ -150,19 +201,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-
-
-
-
     //end barcode
-    public void goToAddForm(View view){
+    public void goToAddForm(View view) {
         Intent intent = new Intent(this, AddItem.class);
         startActivity(intent);
-
     }
 
 
@@ -184,6 +226,48 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void getBarCode(View view){
+        fetchProductFromBarcode("190514050377");
+    }
+
+    public void fetchProductFromBarcode(String barcode) {
+        // Instantiate the RequestQueue.
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "https://api.apigenius.io/products/identifiers?upc=" + barcode+"&api_key=c92527de1c1e430096411a8a099d548b";
+        Toast.makeText(getApplicationContext(), url, Toast.LENGTH_LONG).show();
+
+        Toast.makeText(getApplicationContext(), url, Toast.LENGTH_LONG);
+        TextView textView = (TextView) findViewById(R.id.textView4);
+        // Request a string response from the provided URL.
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        textView.setText(response.toString());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        textView.setText(error.toString());
+                        //Failure Callback
+
+                    }
+                }) {
+            /** Passing some request headers* */
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("ApiGenius_API_Key", "c92527de1c1e430096411a8a099d548b");
+                return headers;
+            }
+        };
+//API GENIUS KEY: c92527de1c1e430096411a8a099d548b
+        // Add the request to the RequestQueue.
+        queue.add(jsonObjectRequest);
+    }
 
 
 
